@@ -1,0 +1,22 @@
+div{
+    text-align: center;
+}
+input{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.container-username {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.container-password {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,7 @@
+<button class="btn-contribute" mat-raised-button  (click)="doAction(true)" matTooltip="Contribute">
+    <mat-icon class="icons">mood</mat-icon> 
+</button>
+
+<button class="btn-sabotage" mat-raised-button  (click)="doAction(false)" matTooltip="Sabotage" *ngIf="psychopath">
+    <mat-icon class="icons">sentiment_very_dissatisfied</mat-icon> 
+</button>

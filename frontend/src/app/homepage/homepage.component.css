@@ -1,0 +1,210 @@
+
+
+.mat-card-container {
+  /* display: flex; */
+  /* justify-content: center; */
+  /* flex-direction: column; */
+  /* align-items: center; */
+  /* height: 100vh; */
+  /* text-align: center; */
+  /* padding-right: 40px; */
+  width: 50%;
+}
+
+.title {
+  margin-top: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.subtitle {
+  margin-top: 5px;
+  font-weight: normal;
+  text-align: left;
+}
+
+.server-data{
+  margin-bottom: 20px;
+  width: 30px;
+  height: 20px;
+}
+
+.main-options {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.main-options button {
+  margin-right: 10px;
+  margin-left: 25px;
+  padding-left: 20px;
+}
+
+.form-options {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.form-options label{
+  margin-right: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+}
+
+.form-options input{
+  margin-right: 15px;
+}
+
+.form-options button{
+  width: 30px;
+  height: 20px;
+}
+
+.form-options mat-form-field{
+  /* margin-right: 15px; */
+  width: 177px;
+  height: 10%;
+}
+
+.form-data{
+  margin-bottom: 20px;
+  /* text-align: left; */
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+mat-card {
+  width: 100%;
+  height: 50vh;
+  justify-content: space-between;
+}
+
+mat-card-actions {
+  justify-content: center;
+}
+mat-card-header {
+  justify-content: center;
+  flex-direction: column;
+}
+
+.container-card-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.member-container {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.container-status-round {
+  margin-top: 10px;
+}
+
+.selected {
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.7));
+}
+
+.icon-leader {
+  font-size: 10px;
+  height: 10px;
+
+  margin: 0 auto;
+}
+
+.group-member {
+  font-weight: bold;
+}
+
+.start_game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+
+
+.round-info {
+  margin-top: 30px;
+}
+
+.result-game{
+  margin-top: 40px;
+  font-size: 30px;
+}
+
+.btn-join-game{
+  font-size: 13px;
+    height: auto;
+    margin-bottom: 1px;
+}
+
+.container-item-search{
+  width: 20%;
+  height: 60px;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.container-search{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh;  */
+  width: 90%;
+  margin: 0 auto;
+}
+
+table {
+  /* Añade cualquier estilo adicional que desees para la tabla */
+  border: 1px solid #ccc; /* Ejemplo: borde de la tabla */
+  text-align: center;
+  margin-top: 20px;
+}
+mat-header-row{
+  background: #e5e5e5;
+}
+
+@media (max-width: 767px) {
+  .member-container {
+    width: 33%;
+  }
+}
+
+@media (max-width: 480px) {
+  .member-container {
+    width: 50%;
+  }
+
+  .main{
+    flex-direction: column;
+  }
+
+  .container-item-search{
+    width: 20%;
+    
+  }
+
+  .container-search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+  }
+}

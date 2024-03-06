@@ -1,0 +1,17 @@
+<div>
+    <form #formJoin>
+
+        <h2>Join Game</h2>
+        <div class="container-username">
+          <label>Username:</label>
+          <input matInput #username>
+        </div>
+    
+        <div class="container-password">
+          <label>Password:</label>
+          <input matInput #password placeholder="Password is optional" type="password">
+        </div>
+    
+        <button mat-raised-button (click)="SaveData()">Join</button>
+    </form>
+</div>

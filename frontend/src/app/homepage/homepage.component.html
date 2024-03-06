@@ -1,0 +1,229 @@
+<header class="server-data">
+  <mat-form-field *ngIf="showServers">
+    <label class="subtitle">Select a server</label>
+    <mat-select name="server" #server >
+      <mat-option value=""></mat-option>
+      <mat-option value="1" (click)="serverSwitch()">Main</mat-option>
+      <mat-option value="a" (click)="serverSwitch()">A</mat-option>
+      <mat-option value="b">B</mat-option>
+      <mat-option value="c">C</mat-option>
+      <mat-option value="d">D</mat-option>
+      <mat-option value="e">E</mat-option>
+    </mat-select>
+  </mat-form-field>
+</header>
+
+<h1 class="title">ContaminaDOS</h1>
+
+<div class="main-options" >
+  <form>
+    <button mat-raised-button (click)="getGame()" *ngIf="roomId"> Get Data</button>
+    <button mat-raised-button (click)="onClickCreate()" *ngIf="!roomId"> Create Game</button>
+    <button mat-raised-button (click)="onClickSearch()" *ngIf="!roomId"> Search Game</button>
+    <button mat-raised-button (click)="onClickJoin()" *ngIf="!roomId"> Join Game</button>
+
+  </form>
+</div>
+
+<div class="form-options">
+  <form *ngIf="showCreateForm" #form1>
+    <div class="form-data">
+      <label for="name">Name of the Game:</label>
+      <input matInput [(ngModel)] = "game.name" #name [ngModelOptions]="{standalone: true}">
+    </div>
+
+    <div class="form-data">
+      <label for="owner">Owner:</label>
+      <input matInput [(ngModel)] = "game.owner" #owner [ngModelOptions]="{standalone: true}">
+    </div>
+
+    <div class="form-data">
+      <label for="password">Password:</label>
+      <input type="password" matInput #psw [(ngModel)] = "game.password" [ngModelOptions]="{standalone: true}" placeholder="Password is optional">
+    </div>
+
+    <button mat-raised-button (click)="gameCreate()">Create</button>
+  </form>
+
+  <!--Search Form-->
+  <form *ngIf="showSearchForm" #form2>
+
+    <div class="form-data">
+      <label>Name of the Game:</label>
+      <input matInput #nameSearch>
+    </div>
+
+    <div class="form-data">
+      <label>Status:</label>
+      <mat-form-field>
+        <mat-select name="status" #status>
+          <mat-option value=""></mat-option>
+          <mat-option value="lobby">Lobby</mat-option>
+          <mat-option value="rounds">Rounds</mat-option>
+          <mat-option value="ended">Ended</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-data">
+      <label>Records to Skip:</label>
+      <input matInput #records type="number">
+    </div>
+
+    <div class="form-data">
+      <label>Records to Show:</label>
+      <input matInput #returned type="number">
+    </div>
+
+    <button mat-raised-button (click)="gameSearch()">Buscar</button>
+  </form>
+  <!--End of Search Form-->
+
+
+  <form *ngIf="showJoinForm">
+
+    <div class="form-data">
+      <label>Room id:</label>
+      <input matInput #joinRoomId>
+    </div>
+
+    <div class="form-data">
+      <label>Username:</label>
+      <input matInput #user>
+    </div>
+
+    <div class="form-data">
+      <label>Password:</label>
+      <input matInput #psw type="password">
+    </div>
+
+    <button mat-raised-button (click)="joinGame()">Join</button>
+
+  </form>
+
+</div>
+
+<div class="main">
+  <div class="mat-card-container" *ngIf="infoGame.data">
+    <div #roundView>
+      <mat-card>
+        <mat-card-header>
+          <div>
+            <mat-card-title>{{infoGame.data.name}} </mat-card-title>
+            <p>{{infoGame.data.status}}</p>
+
+            <p class="result-game" *ngIf="resultGame">{{resultGame}}</p>
+          </div>
+
+          <div class="container-status-round">
+            <h5 *ngIf="stateRound">Status round: {{stateRound}}</h5>
+          </div>
+        </mat-card-header>
+
+        <div><p>Username: <strong>{{username}}</strong></p></div>
+        
+        <mat-card-content>
+          
+          <div class="container-card-content" *ngIf="infoGame.data">
+            <div class="member-container" *ngFor="let member of infoGame.data.players" (click)="userSelected(member)"
+              [class.selected]="group.includes(member)"
+              [class.group-member]="infoRound.data && infoRound.data.group.includes(member)">
+              <mat-icon class="icon-leader" *ngIf="infoRound.data && member==infoRound.data.leader">groups</mat-icon>
+              <app-member [name]="member" [enemies]="infoGame.data.enemies"></app-member>
+
+            </div>
+          </div>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+
+          <app-action-round-member [psychopath]="psychopath" *ngIf="contributionButton"></app-action-round-member>
+          <div class="container-votes">
+            <app-vote-round-member *ngIf="voteButton"></app-vote-round-member>
+          </div>
+          <app-propose-group *ngIf="proposeButton" [group]="group"
+            (newGroup)="changeGroupValue($event)"></app-propose-group>
+
+          <div class="start_game">
+            <button mat-raised-button (click)="gameStart()"
+              *ngIf="(infoGame.data && infoGame.data.owner===username) && !infoRound.data && !infoRounds.data">Empezar Juego</button>
+          </div>
+
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <div *ngIf="infoGame.data" class="round-info">
+    <h2>
+      Info Game
+      <hr style="height: 1px;  background: black;">
+    </h2>
+    
+     <p>Room Id: {{roomId}}</p>
+     <p>Owner: {{infoGame.data.owner}}</p>
+
+     <hr>
+     <br>
+     <br>
+     
+     <h3>
+      Info Rounds
+      <hr>
+     </h3>
+
+     <div *ngFor="let round of infoRounds.data; let i = index">
+      <p><strong>Round {{i+1}}</strong></p>
+        <p>Status Round: {{round.status}}</p>
+        <p>Leader: {{round.leader}}</p>
+        <p>result: {{round.result}}</p>
+        <hr>
+     </div>
+
+  </div>
+</div>
+
+<div *ngIf="resultSearch"  >
+  <div class="container-search">
+    <table mat-table [dataSource]="dataSource">
+
+  
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="container-item-search">Name</th>
+        <td mat-cell *matCellDef="let elemento" class="container-item-search" matTooltip={{elemento.name}} matTooltipPosition="above">{{ elemento.name }}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="owner" >
+        <th mat-header-cell *matHeaderCellDef class="container-item-search">Owner</th>
+        <td mat-cell *matCellDef="let elemento" class="container-item-search">{{ elemento.owner }}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="container-item-search">State</th>
+        <td mat-cell *matCellDef="let elemento" class="container-item-search">{{ elemento.status }}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="password">
+        <th mat-header-cell *matHeaderCellDef class="container-item-search">Password</th>
+        <td mat-cell *matCellDef="let elemento" class="container-item-search">{{ elemento.password }}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="Join">
+        <th mat-header-cell *matHeaderCellDef class="container-item-search">Join</th>
+        <td mat-cell *matCellDef="let elemento" class="container-item-search">
+          <button mat-raised-button class="btn-join-game" (click)="joinedSearchedGame(elemento.id)">Join Game</button> 
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons>
+  </mat-paginator>
+
+</div>
+
